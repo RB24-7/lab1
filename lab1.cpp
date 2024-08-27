@@ -1,5 +1,5 @@
 //
-//modified by: Jorge Pompa 4
+//modified by: Jorge Pompa  4test
 //date: 08/27/2024
 //
 //original author: Gordon Griesel
@@ -35,7 +35,7 @@ public:
 	w = 20.0f;
 	vel = 30.0f;
 	pos[0] = 0.0f + w;
-    pos[1] = yres/2.0f;
+    	pos[1] = yres/2.0f;
     }
 } g;
 
