@@ -29,13 +29,18 @@ public:
 	float w;
 	float vel;
 	float pos[2];
+	bool smallWindowCheck;
+	bool windowSmallerThanBox;
+	
 	Global() {
 	xres = 400;
 	yres = 200;
 	w = 20.0f;
 	vel = 30.0f;
 	pos[0] = 0.0f + w;
-    	pos[1] = yres/2.0f;
+    pos[1] = yres/2.0f;
+	smallWindowCheck = true;
+	windowSmallerThanBox = false;
     }
 } g;
 
@@ -79,6 +84,7 @@ int main()
 		render();
 		x11.swapBuffers();
 		usleep(200);
+
 	}
 	return 0;
 }
@@ -203,9 +209,22 @@ void X11_wrapper::check_mouse(XEvent *e)
 		if (savex != e->xbutton.x || savey != e->xbutton.y) {
 			savex = e->xbutton.x;
 			savey = e->xbutton.y;
+
 			//Code placed here will execute whenever the mouse moves.
 
+			if(g.xres <= 400 && g.yres <= 200)
+			{
+				g.smallWindowCheck = true;
+			} else {
+				g.smallWindowCheck = false;
+			}
 
+			if(g.xres > 30)
+			{
+				g.windowSmallerThanBox = false;
+			} else if(g.xres <= 30){
+				g.windowSmallerThanBox = true;
+			}
 		}
 	}
 }
@@ -248,24 +267,40 @@ void physics()
 {
 	//No physics yet.
 	g.pos[0] += g.vel;
-	if (g.pos[0] >= (g.xres-g.w)) {
+	if (g.pos[0] >= (g.xres-g.w))
+	{
 		g.pos[0] = (g.xres-g.w);
 		g.vel = -g.vel;
 	}
-	if (g.pos[0] <= g.w) {
+	if (g.pos[0] <= g.w) 
+	{
 		g.pos[0] = g.w;
         g.vel = -g.vel;
 	}
-
 }
 
 void render()
 {
-	//
+	if(g.windowSmallerThanBox)
+	{
+		std::cout << "window is smaller than the box" << std::endl;
+		glClear(GL_COLOR_BUFFER_BIT);
+		return;
+	} else {
+		std::cout << "window is bigger than the box" << std::endl;
+	}
+
+	if(g.smallWindowCheck)
+	{
+		glColor3ub(250, 0, 0);
+	} else {
+		glColor3ub(0, 0, 250);
+	}
+
 	glClear(GL_COLOR_BUFFER_BIT);
 	//draw the box
 	glPushMatrix();
-	glColor3ub(100, 120, 220);
+
 	glTranslatef(g.pos[0], g.pos[1], 0.0f);
 	glBegin(GL_QUADS);
 		glVertex2f(-g.w, -g.w);
@@ -275,9 +310,6 @@ void render()
 	glEnd();
 	glPopMatrix();
 }
-
-
-
 
 
 
