@@ -1,7 +1,7 @@
 //
-//modified by: Jorge Pompa  4testChickenWing
+//modified by: Jorge Pompa  4test
 //date: 08/27/2024
-//
+//date: 10/22/2024 Added Include Guard
 //original author: Gordon Griesel
 //date:            Fall 2024
 //purpose:         OpenGL sample program
@@ -9,7 +9,7 @@
 //This program needs some refactoring.
 //We will do this in class together.
 //
-//
+
 #include <iostream>
 #include <stdio.h>
 #include <unistd.h>
@@ -20,6 +20,7 @@
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
 #include <GL/glx.h>
+#include "myinclude.h"
 
 using namespace std;
 
